@@ -1,5 +1,4 @@
 import { prisma } from './prisma';
-import { Prisma } from '@prisma/client';
 import * as DJS from 'discord.js';
 import { codeBlock, time } from '@discordjs/builders';
 import { Bot } from '../';
