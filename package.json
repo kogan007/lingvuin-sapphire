@@ -42,7 +42,7 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
-		"generate-prisma": "npx prisma generate",
+		"generate-prisma": "npx prisma generate --schema=./src/prisma/schema.prisma",
 		"postinstall": "patch-package",
 		"sapphire": "sapphire",
 		"generate": "sapphire generate",
