@@ -29,7 +29,7 @@ export class MenuHandler extends InteractionHandler {
 			});
 		}
 
-		const item = allItems.find((item) => item.name === colorChoice.name)!;
+		const item = allItems.find((item: any) => item.name === colorChoice.name)!;
 		const actionRow = new DJS.ActionRowBuilder<DJS.ButtonBuilder>();
 
 		const buyButton = new DJS.ButtonBuilder()

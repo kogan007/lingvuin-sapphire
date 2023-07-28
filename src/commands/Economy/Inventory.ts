@@ -58,7 +58,7 @@ export class InventoryCommand extends Command {
 		const inventoryEmbed = new DJS.EmbedBuilder();
 		if (inventory.length > 0) {
 			inventoryEmbed.addFields(
-				inventoryItems!.map((item) => ({
+				inventoryItems!.map((item: any) => ({
 					name: item.name,
 					value: item.name
 				}))
@@ -73,7 +73,7 @@ export class InventoryCommand extends Command {
 		const actionRow = new DJS.ActionRowBuilder<DJS.StringSelectMenuBuilder>();
 		const select = new DJS.StringSelectMenuBuilder().setCustomId('equipItem').addOptions(
 			[...inventory].slice(0, 10).map((item) => {
-				const itemRelation = inventoryItems!.find((i) => i.name === item)!;
+				const itemRelation = inventoryItems!.find((i: any) => i.name === item)!;
 				return new DJS.StringSelectMenuOptionBuilder().setLabel(`Equip ` + itemRelation.name).setValue(itemRelation.name);
 			})
 		);

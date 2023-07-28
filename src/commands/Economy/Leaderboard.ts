@@ -30,7 +30,7 @@ export class LeaderboardCommand extends Command {
 					}
 				}
 			})
-		).sort((a, b) => b.money - a.money);
+		).sort((a: any, b: any) => b.money - a.money);
 
 		const amountOfEmbeds = Math.round(leaderboard.length / 10);
 		let leaderboards: DJS.EmbedBuilder[] = [];

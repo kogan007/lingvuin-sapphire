@@ -22,7 +22,7 @@ export class MenuHandler extends InteractionHandler {
 		}
 
 		const selection = interaction.values[0];
-		const item = inventoryItems.find((item) => item.name === selection)!;
+		const item = inventoryItems.find((item: any) => item.name === selection)!;
 		const member = interaction.member;
 		const type = item.type;
 		const rolesToRemove = type === 'icon' ? icons : colors;
