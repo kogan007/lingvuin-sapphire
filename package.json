@@ -23,6 +23,7 @@
 		"@skyra/env-utilities": "^1.2.1",
 		"canvas-gif": "^1.0.3",
 		"colorette": "^2.0.20",
+		"copy-files": "^0.1.0",
 		"discord.js": "^14.11.0",
 		"patch-package": "^8.0.0",
 		"prisma": "^5.0.0"
@@ -42,11 +43,12 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
+		"copy-files": "npx copyfiles -u 1 src/**/*.gif dist",
 		"generate-prisma": "npx prisma generate --schema=./src/prisma/schema.prisma",
 		"postinstall": "patch-package",
 		"sapphire": "sapphire",
 		"generate": "sapphire generate",
-		"build": "npm run generate-prisma && tsc",
+		"build": "npm run generate-prisma && npm run copy-files && tsc",
 		"watch": "tsc -w",
 		"start": "node dist/index.js",
 		"dev": "run-s build start",
