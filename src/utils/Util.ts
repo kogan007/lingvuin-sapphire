@@ -115,7 +115,7 @@ export class Util {
 	async getItemsByName(itemNames: string[]) {
 		const items = await prisma.item.findMany();
 
-		return items.filter((item) => itemNames.includes(item.name));
+		return items.filter((item: any) => itemNames.includes(item.name));
 	}
 	async getItemByName(name: string) {
 		const item = await prisma.item.findFirst({
@@ -133,7 +133,7 @@ export class Util {
 		});
 		return user;
 	}
-	async updateUserById(userId: string, data: Partial<Prisma.UserUpdateManyArgs['data']>) {
+	async updateUserById(userId: string, data: any) {
 		const user = await this.getUserById(userId);
 
 		if (!user) {

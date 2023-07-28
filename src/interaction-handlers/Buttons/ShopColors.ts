@@ -19,7 +19,7 @@ export class ButtonHandler extends InteractionHandler {
 				content: 'An unexpected error occurred'
 			});
 		}
-		const filteredColors = colors.filter((color: any) => inventoryItems.filter((i) => i.name === color.name).length === 0);
+		const filteredColors = colors.filter((color: any) => inventoryItems.filter((i: any) => i.name === color.name).length === 0);
 
 		const select = new DJS.StringSelectMenuBuilder().setCustomId('colorSelect');
 		const actions = new DJS.ActionRowBuilder<DJS.StringSelectMenuBuilder>();
