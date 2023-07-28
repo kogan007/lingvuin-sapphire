@@ -27,7 +27,7 @@
 		"prisma": "^5.0.0"
 	},
 	"engines": {
-		"node": "17.0.0"
+		"node": ">=18.0.0"
 	},
 	"devDependencies": {
 		"@sapphire/cli": "^1.6.1",
