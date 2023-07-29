@@ -13,13 +13,15 @@ export class ProfileCommand extends Command {
 			builder //
 				.setName(this.name)
 				.setDescription(this.description)
+				.addUserOption((opt) => opt.setName('user').setDescription('The whose profile you want to view').setRequired(false))
 		);
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		await interaction.deferReply();
-
-		const user = await this.container.utils.getUserById(interaction.user.id);
+		const userToView = interaction.options.getUser('user');
+		const id = userToView?.id ?? interaction.user.id;
+		const user = await this.container.utils.getUserById(id);
 		const reputation = user.reputation || [];
 
 		const embed = new EmbedBuilder().addFields(
