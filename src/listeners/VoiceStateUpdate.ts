@@ -24,15 +24,20 @@ export class UserEvent extends Listener {
 
 			const seconds = totalTime / 1000;
 			const minutes = seconds / 60;
+            const user = await this.container.utils.getUserById(member.user.id);
 
 			if (minutes > 1) {
 				const totalCoinsToGive = 5 * minutes;
-				const user = await this.container.utils.getUserById(member.user.id);
 				const balance = user!.money ?? 0;
 				await this.container.utils.updateUserById(member.user.id, {
-					money: balance + Math.round(totalCoinsToGive)
+					money: balance + Math.round(totalCoinsToGive),
+                    timeInVoice: user.timeInVoice + totalTime
 				});
-			}
+			} else {
+                await this.container.utils.updateUserById(member.user.id, {
+                    timeInVoice: user.timeInVoice + totalTime
+				});
+            }
 			users.delete(member.user.id);
 		} else if (!oldState.channel && newState.channel) {
 			// User joined the voice channel

@@ -17,20 +17,24 @@ export class RepCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply();
 		const sender = interaction.user.id;
 		const receiver = interaction.options.getUser('user');
 
 		if (!sender || !receiver) {
 			return await interaction.editReply('An error occurred');
 		}
-
+		
 		const apiReceiver = await this.container.utils.getUserById(receiver.id);
-		await apiReceiver
-			.update({
-				reputation: [...apiReceiver.reputation, sender]
-			})
-			.then((d) => console.log(d));
+		if (apiReceiver.reputation && apiReceiver.reputation.includes(sender)) {
+			return await interaction.editReply(`You have already given <@${receiver.id}> reputation`)
+		}
+		if (apiReceiver.reputation && receiver.id === sender) {
+			return await interaction.editReply(`You cannot give reputation to yourself`)
+		}
+		await this.container.utils.updateUserById(apiReceiver.userId, {
+			reputation: [...apiReceiver.reputation, sender]
+		})
 
 		return interaction.editReply(`You gave <@${receiver.id}> +1 reputation`);
 	}
