@@ -19,21 +19,23 @@ export class ProfileCommand extends Command {
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		await interaction.deferReply();
-		const userToView = interaction.options.getUser('user');
-		const id = userToView?.id ?? interaction.user.id;
-		const user = await this.container.utils.getUserById(id);
+		const userToView = interaction.options.getUser('user') ?? interaction.user;
+		const user = await this.container.utils.getUserById(userToView.id);
 		const reputation = user.reputation || [];
 
-		const embed = new EmbedBuilder().addFields(
+		const embed = new EmbedBuilder().setImage(userToView.avatarURL()).setTitle(`${userToView.username}'s Profile`).addFields(
 			{
 				name: 'Balance',
 				value: `$${user.money} Lingvuin Coins`
-			},
-			{
-				name: `Reputation`,
-				value: reputation.map((user) => `<@${user}>`).join('\n')
 			}
 		);
+
+		if (reputation.length > 0) {
+			embed.addFields({
+				name: `Social Credits`,
+				value: reputation.map((user) => `<@${user}>`).join('\n')
+			})
+		}
 
 		return await interaction.editReply({
 			embeds: [embed]
