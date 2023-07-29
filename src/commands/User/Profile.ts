@@ -31,7 +31,7 @@ export class ProfileCommand extends Command {
 			},
 			{
 				name: `Reputation`,
-				value: reputation.map((user) => `<@${user}>`).join('')
+				value: reputation.map((user) => `<@${user}>`).join('\n')
 			}
 		);
 
