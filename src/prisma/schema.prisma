@@ -16,6 +16,8 @@ model User {
   dailyCooldown Int?
   money Int @default(0)
   inventory String[]
+  reputation String[]
+  experience Int @default(0)
   messagesSent Int @default(0)
   timeInVoice Int @default(0)
   isRashist Boolean @default(false)
