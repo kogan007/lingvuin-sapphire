@@ -22,10 +22,16 @@ export class ProfileCommand extends Command {
 		const user = await this.container.utils.getUserById(interaction.user.id);
 		const reputation = user.reputation || [];
 
-		const embed = new EmbedBuilder().addFields({
-			name: `Reputation`,
-			value: reputation.map((user) => `<@${user}>`).join('')
-		});
+		const embed = new EmbedBuilder().addFields(
+			{
+				name: 'Balance',
+				value: `$${user.money} Lingvuin Coins`
+			},
+			{
+				name: `Reputation`,
+				value: reputation.map((user) => `<@${user}>`).join('')
+			}
+		);
 
 		return await interaction.editReply({
 			embeds: [embed]
