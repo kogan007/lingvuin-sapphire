@@ -26,9 +26,11 @@ export class RepCommand extends Command {
 		}
 
 		const apiReceiver = await this.container.utils.getUserById(receiver.id);
-		await apiReceiver.update({
-			reputation: [...apiReceiver.reputation, sender]
-		});
+		await apiReceiver
+			.update({
+				reputation: [...apiReceiver.reputation, sender]
+			})
+			.then((d) => console.log(d));
 
 		return interaction.editReply(`You gave <@${receiver.id}> +1 reputation`);
 	}
