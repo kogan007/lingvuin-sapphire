@@ -16,16 +16,16 @@ export class UserEvent extends Listener {
 	}
 
 	private async main() {
-		const guild = await this.container.client.guilds.fetch('1042523320752537680');
-		const banner = await this.container.utils.makeBannerGif(guild);
-		await guild.setBanner(banner);
 		await agenda.start();
+		const guild = await this.container.client.guilds.fetch('1042523320752537680');
+		this.container.utils.makeBannerImage(guild).then(banner => guild.setBanner(banner));
+		
+		
 
 		setInterval(async () => {
 			const guild = await this.container.client.guilds.fetch('1042523320752537680');
-			const banner = await this.container.utils.makeBannerGif(guild);
-			await guild.setBanner(banner);
-		}, 30_000);
+			this.container.utils.makeBannerImage(guild).then(banner => guild.setBanner(banner));
+		}, 60_000);
 	}
 	private printBanner() {
 		const success = green('+');

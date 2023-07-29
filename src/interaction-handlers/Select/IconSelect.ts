@@ -11,12 +11,13 @@ import icons from '../../items/icons';
 })
 export class MenuHandler extends InteractionHandler {
 	public override async run(interaction: StringSelectMenuInteraction) {
+		await interaction.deferUpdate();
 		const translation = translations[interaction.locale as keyof typeof translations] || translations['en-US'];
 		const selection = interaction.values[0];
 		const iconChoice = icons.find((color) => color.name === selection);
 		if (!iconChoice) {
-			return await interaction.reply({
-				ephemeral: true,
+			return await interaction.editReply({
+
 				content: `Color not found`
 			});
 		}

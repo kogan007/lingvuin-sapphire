@@ -21,12 +21,18 @@
 		"@sapphire/type": "^2.4.0",
 		"@sapphire/utilities": "^3.13.0",
 		"@skyra/env-utilities": "^1.2.1",
+		"@types/sharp": "^0.32.0",
+		"branchy": "^2.0.0",
+		"canvas": "^2.11.2",
 		"canvas-gif": "^1.0.3",
 		"colorette": "^2.0.20",
 		"copy-files": "^0.1.0",
+		"decode-gif": "^1.0.1",
 		"discord.js": "^14.11.0",
+		"gif-encoder-2": "^1.0.5",
 		"patch-package": "^8.0.0",
-		"prisma": "^5.0.0"
+		"prisma": "^5.0.0",
+		"sharp": "^0.32.4"
 	},
 	"engines": {
 		"node": ">=17.0.0"

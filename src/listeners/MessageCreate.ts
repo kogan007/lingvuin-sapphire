@@ -15,7 +15,8 @@ export class UserEvent extends Listener {
 		const user = await this.container.utils.getUserById(message.author.id);
 		if (user) {
 			await this.container.utils.updateUserById(message.author.id, {
-				money: user.money + 1
+				money: user.money + 1,
+				messagesSent: user.messagesSent + 1
 			});
 		}
 	}

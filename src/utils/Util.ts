@@ -2,8 +2,9 @@ import { prisma } from './prisma';
 import * as DJS from 'discord.js';
 import { codeBlock, time } from '@discordjs/builders';
 import { Bot } from '../';
-import canvasgif from 'canvas-gif';
-import path from 'node:path';
+// import canvasgif from 'canvas-gif';
+// import path from 'node:path';
+import sharp from "sharp"
 
 export class Util {
 	bot: Bot;
@@ -20,7 +21,42 @@ export class Util {
 			}
 		});
 	}
-	async makeBannerGif(data: DJS.Guild) {
+	// async makeBannerGif(data: DJS.Guild) {
+	// 	const memberCount = data.memberCount;
+	// 	let channelList: DJS.GuildBasedChannel[] =[]
+
+	// 	for (const channel of data.channels.cache.values()) {
+	// 		channelList.push(channel)
+	// 	}
+	// 	const voiceCount = channelList
+	// 		.filter((ch) => ch && ch.type === DJS.ChannelType.GuildVoice)
+	// 		.reduce((a, c) => {
+	// 			if (!c) return 0;
+	// 			if (!c.isVoiceBased()) return 0;
+	// 			const memberSize: number = c.members.size;
+	// 			return a + memberSize;
+	// 		}, 0);
+
+	// 	return await canvasgif(
+	// 		path.resolve(__dirname, 'banner.gif'),
+	// 		(ctx) => {
+	// 			ctx.fillStyle = '#fff';
+	// 			ctx.font = '65px "Sans"';
+	// 			ctx.fillText(String(voiceCount), 250, 340);
+	// 			ctx.fillText(String(memberCount), 250, 460);
+	// 		},
+	// 		{
+	// 			coalesce: true, // whether the gif should be coalesced first, default: false
+	// 			delay: 0, // the delay between each frame in ms, default: 0
+	// 			repeat: 0, // how many times the GIF should repeat, default: 0 (runs forever)
+	// 			algorithm: 'octree', // the algorithm the encoder should use, default: 'neuquant',
+	// 			optimiser: true, // whether the encoder should use the in-built optimiser, default: false,
+	// 			fps: 20, // the amount of frames to render per second, default: 60
+	// 			quality: 40 // the quality of the gif, a value between 1 and 100, default: 100
+	// 		}
+	// 	);
+	// }
+	async makeBannerImage(data: DJS.Guild) {
 		const memberCount = data.memberCount;
 		const channels = await data.channels.fetch();
 		const voiceCount = channels
@@ -32,24 +68,47 @@ export class Util {
 				return a + memberSize;
 			}, 0);
 
-		return await canvasgif(
-			path.resolve(__dirname, 'banner.gif'),
-			(ctx) => {
-				ctx.fillStyle = '#fff';
-				ctx.font = '65px "Sans"';
-				ctx.fillText(String(voiceCount), 250, 340);
-				ctx.fillText(String(memberCount), 250, 460);
-			},
-			{
-				coalesce: false, // whether the gif should be coalesced first, default: false
-				delay: 0, // the delay between each frame in ms, default: 0
-				repeat: 0, // how many times the GIF should repeat, default: 0 (runs forever)
-				algorithm: 'octree', // the algorithm the encoder should use, default: 'neuquant',
-				optimiser: true, // whether the encoder should use the in-built optimiser, default: false,
-				fps: 20, // the amount of frames to render per second, default: 60
-				quality: 100 // the quality of the gif, a value between 1 and 100, default: 100
-			}
+		const width = 750;
+		const height = 483;
+
+		const svgImage = `
+    <svg width="${width}" height="${height}">
+    <style>
+      .title { fill: #fff; font-size: 35px; font-weight: bold;}
+      </style>
+      <text x="19%" y="52%" text-anchor="middle" class="title">${memberCount}</text>
+    </svg>
+    `;
+		const svgImage2 = `
+    <svg width="${width}" height="${height}">
+    <style>
+      .title { fill: #fff; font-size: 40px; font-weight: bold;}
+      </style>
+      <text x="95%" y="52%" text-anchor="middle" class="title">${voiceCount}</text>
+    </svg>
+    `;
+		const banner = await fetch('https://cdn.discordapp.com/attachments/625125553329930240/1127840774344687686/beige.png').then((res) =>
+			res.arrayBuffer()
 		);
+		const svgBuffer = Buffer.from(svgImage);
+		const svgBuffer2 = Buffer.from(svgImage2);
+
+		const img = await sharp(banner)
+			.composite([
+				{
+					input: svgBuffer,
+					top: 0,
+					left: 0
+				},
+				{
+					input: svgBuffer2,
+					top: 0,
+					left: 130
+				}
+			])
+			.png()
+			.toBuffer();
+		return img;
 	}
 	async buyItem({
 		userId,
