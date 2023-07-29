@@ -4,7 +4,7 @@ import { codeBlock, time } from '@discordjs/builders';
 import { Bot } from '../';
 // import canvasgif from 'canvas-gif';
 // import path from 'node:path';
-import sharp from "sharp"
+import sharp from 'sharp';
 
 export class Util {
 	bot: Bot;
@@ -159,11 +159,27 @@ export class Util {
 		};
 	}
 	async getUserById(userId: string) {
-		const user =
+		const user: any =
 			(await prisma.user.findFirst({
 				where: { userId }
 			})) ?? (await this.addUser(userId));
-		return user;
+		user.update = (data: any) => {
+			return this.updateUserById(user.id, data);
+		};
+		return user as {
+			id: string;
+			userId: string;
+			dailyCooldown: number | null;
+			money: number;
+			inventory: string[];
+			reputation: string[];
+			experience: number;
+			messagesSent: number;
+			timeInVoice: number;
+			isRashist: boolean;
+			birthday: string | null;
+			update: (data: any) => any;
+		};
 	}
 	async getAllItems() {
 		const items = await prisma.item.findMany();
