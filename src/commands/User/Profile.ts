@@ -1,5 +1,6 @@
 import { Command } from '@sapphire/framework';
 import { EmbedBuilder } from 'discord.js';
+import canvacord from 'canvacord';
 
 export class ProfileCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
@@ -23,22 +24,18 @@ export class ProfileCommand extends Command {
 		const user = await this.container.utils.getUserById(userToView.id);
 		const reputation = user.reputation || [];
 
-		const embed = new EmbedBuilder().setImage(userToView.avatarURL()).setTitle(`${userToView.username}'s Profile`).addFields(
-			{
-				name: 'Balance',
-				value: `$${user.money} Lingvuin Coins`
-			}
-		);
+		const level = Math.floor(0.15 * Math.sqrt(user.experience + 1));
+		const rank = new canvacord.Rank()
+			.setAvatar(userToView.avatarURL() ?? '')
+			.setCurrentXP(user.experience ?? 0)
+			.setRequiredXP(Math.floor((level / 0.15) * (level / 0.15)))
+			.setProgressBar('#FFFFFF', 'COLOR')
+			.setUsername(userToView.username);
 
-		if (reputation.length > 0) {
-			embed.addFields({
-				name: `Social Credits`,
-				value: reputation.map((user) => `<@${user}>`).join('\n')
-			})
-		}
+		const image = await rank.build();
 
 		return await interaction.editReply({
-			embeds: [embed]
+			files: [image]
 		});
 	}
 }
