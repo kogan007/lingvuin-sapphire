@@ -249,7 +249,7 @@ export class MenuHandler extends InteractionHandler {
 					.addOptions(
 						new DJS.StringSelectMenuOptionBuilder().setLabel('Male').setValue('1042551982663139469').setEmoji(`♂️`),
 						new DJS.StringSelectMenuOptionBuilder().setLabel('Female').setValue('1042552054960361523').setEmoji(`♀️`),
-						new DJS.StringSelectMenuOptionBuilder().setLabel('Unknown').setValue('1042650073210818593').setEmoji(`❓`)
+						new DJS.StringSelectMenuOptionBuilder().setLabel('Other').setValue('1042650073210818593').setEmoji(`❓`)
 					);
 				const row = new DJS.ActionRowBuilder().addComponents(genderSelect);
 
