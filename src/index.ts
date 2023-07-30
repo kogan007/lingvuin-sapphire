@@ -34,7 +34,7 @@ export const client = new Bot({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.MessageContent
+		GatewayIntentBits.MessageContent,
 	],
 	partials: [Partials.Channel],
 	loadMessageCommandListeners: true

@@ -1,5 +1,6 @@
 import { Command } from '@sapphire/framework';
 
+
 export class RepCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, {
@@ -20,7 +21,6 @@ export class RepCommand extends Command {
 		await interaction.deferReply();
 		const sender = interaction.user.id;
 		const receiver = interaction.options.getUser('user');
-
 		if (!sender || !receiver) {
 			return await interaction.editReply('An error occurred');
 		}
@@ -36,6 +36,11 @@ export class RepCommand extends Command {
 			reputation: [...apiReceiver.reputation, sender]
 		})
 
-		return interaction.editReply(`You gave <@${receiver.id}> +1 reputation`);
+		return interaction.editReply({
+			content: `You gave ${receiver} +1 reputation`,
+			allowedMentions: {
+				parse: ["users"]
+			}
+		});
 	}
 }
