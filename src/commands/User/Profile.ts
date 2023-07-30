@@ -29,7 +29,7 @@ export class ProfileCommand extends Command {
 		const rank = new canvacord.Rank()
 			.setAvatar(userToView.avatarURL() ?? '')
 			.setCurrentXP(user.experience ?? 0)
-			.setRequiredXP(Math.floor((level / 0.15) * (level / 0.15)))
+			.setRequiredXP(Math.floor(((level + 1) / 0.15) * ((level + 1) / 0.15)))
 			.setProgressBar('#FFFFFF', 'COLOR')
 			.setLevel(level)
 			.setUsername(userToView.username);
