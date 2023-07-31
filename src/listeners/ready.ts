@@ -21,9 +21,16 @@ export class UserEvent extends Listener {
 		this.container.utils.makeBannerImage(guild).then((banner) => guild.setBanner(banner));
 
 		setInterval(() => {
-			const mostActive = this.container.recentlyTalked.reduce((prev, current) => (prev > current ? prev : current), 1);
+			const mostMessages = this.container.recentlyTalked.reduce((prev, current) => (prev > current ? prev : current), 0);
+			let mostActive = '';
+			for (let [key, value] of this.container.recentlyTalked.entries()) {
+				if (value === mostMessages) {
+					return (mostActive = key);
+				}
+			}
 			console.log(mostActive);
 			this.container.recentlyTalked.clear();
+			return;
 		}, 30_000);
 		setInterval(async () => {
 			const guild = await this.container.client.guilds.fetch('1042523320752537680');
