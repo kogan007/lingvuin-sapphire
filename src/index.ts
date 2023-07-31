@@ -1,18 +1,20 @@
 import './lib/setup';
 import { LogLevel, SapphireClient, container } from '@sapphire/framework';
-import { GatewayIntentBits, Partials, type ClientOptions } from 'discord.js';
+import { GatewayIntentBits, Partials, type ClientOptions, Collection } from 'discord.js';
 import { Util } from './utils/Util';
 
 export class Bot extends SapphireClient {
 	public constructor(options: ClientOptions) {
 		super(options);
 		container.utils = new Util(this);
+		container.recentlyTalked = new Collection();
 	}
 }
 
 declare module '@sapphire/pieces' {
 	interface Container {
 		utils: Util;
+		recentlyTalked: Collection<string, number>;
 	}
 }
 
@@ -34,7 +36,7 @@ export const client = new Bot({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.MessageContent
 	],
 	partials: [Partials.Channel],
 	loadMessageCommandListeners: true

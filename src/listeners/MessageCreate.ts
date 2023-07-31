@@ -14,6 +14,12 @@ export class UserEvent extends Listener {
 		});
 	}
 	public override async run(message: Message) {
+		const userMessages = this.container.recentlyTalked.get(message.author.id);
+		if (userMessages) {
+			this.container.recentlyTalked.set(message.author.id, userMessages + 1);
+		} else {
+			this.container.recentlyTalked.set(message.author.id, 1);
+		}
 		const user = await this.container.utils.getUserById(message.author.id);
 		if (user) {
 			const { levelUp, xpToAdd, cooldown } = calcUserXp(message, user.experience);
