@@ -31,7 +31,8 @@ export class ProfileCommand extends Command {
 			.setRequiredXP(Math.floor(((level + 1) / 0.15) * ((level + 1) / 0.15)))
 			.setProgressBar('#FFFFFF', 'COLOR')
 			.setLevel(level)
-			.setUsername(userToView.username);
+			.setUsername(userToView.username)
+			.setRank((user.reputation || []).length, "REP")
 
 		const image = await rank.build();
 

@@ -15,6 +15,7 @@ declare module '@sapphire/pieces' {
 	interface Container {
 		utils: Util;
 		recentlyTalked: Collection<string, number>;
+		mostActive: string
 	}
 }
 
