@@ -24,7 +24,7 @@ export class RepCommand extends Command {
 		if (!sender || !receiver) {
 			return await interaction.editReply('An error occurred');
 		}
-		
+
 		const apiReceiver = await this.container.utils.getUserById(receiver.id);
 		if (apiReceiver.reputation && apiReceiver.reputation.includes(sender)) {
 			return await interaction.editReply(`You have already given <@${receiver.id}> reputation`)

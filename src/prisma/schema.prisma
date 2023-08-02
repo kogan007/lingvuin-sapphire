@@ -22,6 +22,7 @@ model User {
   timeInVoice Int @default(0)
   isRashist Boolean @default(false)
   birthday String?
+  partner  String?
 }
 
 model Item {

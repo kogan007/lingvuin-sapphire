@@ -19,7 +19,6 @@ export class UkraineCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-		await interaction.deferReply();
 		if (
 			//@ts-ignore
 			!interaction.member.roles.cache.has('1129114509823455343') &&
@@ -31,7 +30,7 @@ export class UkraineCommand extends Command {
 			});
 		}
 
-		return await interaction.editReply({
+		return await interaction.reply({
 			allowedMentions: {
 				roles: ['1129114509823455343'],
 				repliedUser: true
