@@ -60,7 +60,7 @@ export class RashistCommand extends Command {
                 }
             }
         })
-        collector.on("end", (_, reason) => {
+        collector.on("end", async (_, reason) => {
             if (reason === "time") {
                 await response.edit({ components: [] })
             }
