@@ -25,6 +25,7 @@ export class ProfileCommand extends Command {
 		// const reputation = user.reputation || [];
 
 		const level = Math.floor(0.15 * Math.sqrt(user.experience + 1));
+		console.log(userToView.avatarURL())
 		const rank = new canvacord.Rank()
 			.setAvatar(userToView.avatarURL() ?? '')
 			.setCurrentXP(user.experience ?? 0)

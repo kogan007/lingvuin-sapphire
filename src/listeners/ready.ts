@@ -28,8 +28,10 @@ export class UserEvent extends Listener {
 					mostActive = key;
 				}
 			}
-			console.log({mostActive, mostMessages});
-			this.container.mostActive = mostActive
+
+			if (mostActive) {
+				this.container.mostActive = mostActive
+			}
 			this.container.recentlyTalked.clear();
 			return;
 		}, 7_200_000);

@@ -7,6 +7,7 @@
 	"type": "commonjs",
 	"dependencies": {
 		"@hokify/agenda": "^6.3.0",
+		"@napi-rs/canvas": "^0.1.41",
 		"@prisma/client": "^5.0.0",
 		"@sapphire/decorators": "^6.0.2",
 		"@sapphire/discord-utilities": "^3.0.4",
@@ -50,7 +51,7 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
-		"copy-files": "npx copyfiles -u 1 src/**/*.gif dist",
+		"copy-files": "npx copyfiles -u 1 src/**/*.png dist",
 		"generate-prisma": "npx prisma generate --schema=./src/prisma/schema.prisma",
 		"postinstall": "patch-package",
 		"sapphire": "sapphire",

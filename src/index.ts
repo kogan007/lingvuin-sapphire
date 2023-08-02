@@ -8,6 +8,7 @@ export class Bot extends SapphireClient {
 		super(options);
 		container.utils = new Util(this);
 		container.recentlyTalked = new Collection();
+		container.mostActive = "163071876220846091"
 	}
 }
 

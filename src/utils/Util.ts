@@ -2,9 +2,10 @@ import { prisma } from './prisma';
 import * as DJS from 'discord.js';
 import { codeBlock, time } from '@discordjs/builders';
 import { Bot } from '../';
+import { container } from '@sapphire/framework';
 // import canvasgif from 'canvas-gif';
-// import path from 'node:path';
-import sharp from 'sharp';
+import path from 'node:path';
+import Canvas, { createCanvas } from '@napi-rs/canvas';
 
 export class Util {
 	bot: Bot;
@@ -68,47 +69,46 @@ export class Util {
 				return a + memberSize;
 			}, 0);
 
-		const width = 750;
-		const height = 483;
 
-		const svgImage = `
-    <svg width="${width}" height="${height}">
-    <style>
-      .title { fill: #fff; font-size: 35px; font-weight: bold;}
-      </style>
-      <text x="19%" y="52%" text-anchor="middle" class="title">${memberCount}</text>
-    </svg>
-    `;
-		const svgImage2 = `
-    <svg width="${width}" height="${height}">
-    <style>
-      .title { fill: #fff; font-size: 40px; font-weight: bold;}
-      </style>
-      <text x="95%" y="52%" text-anchor="middle" class="title">${voiceCount}</text>
-    </svg>
-    `;
-		const banner = await fetch('https://cdn.discordapp.com/attachments/625125553329930240/1127840774344687686/beige.png').then((res) =>
-			res.arrayBuffer()
-		);
-		const svgBuffer = Buffer.from(svgImage);
-		const svgBuffer2 = Buffer.from(svgImage2);
+		const mostActiveId = container.mostActive
+		const user = await data.members.fetch(mostActiveId)
 
-		const img = await sharp(banner)
-			.composite([
-				{
-					input: svgBuffer,
-					top: 0,
-					left: 0
-				},
-				{
-					input: svgBuffer2,
-					top: 0,
-					left: 130
-				}
-			])
-			.png()
-			.toBuffer();
-		return img;
+		const avatar = await Canvas.loadImage(user.displayAvatarURL());
+
+
+		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-test.png'));
+
+		const canvas = createCanvas(background.width, background.height);
+		const ctx = canvas.getContext('2d');
+
+		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+		ctx.save();
+
+		ctx.fillStyle = '#fff';
+		ctx.font = 'bold 30px Arial';
+		let name = user.displayName?.slice(0, 10) ?? "";
+		if (name.length > 9) name = name + "..."
+		ctx.fillText(name, 265, 280);
+		ctx.save();
+
+		ctx.font = 'bold 40px Arial';
+		ctx.fillText(String(voiceCount), 600, 290);
+		ctx.save();
+
+		ctx.font = 'bold 25px Arial';
+		ctx.fillText(String(memberCount), 550, 370);
+		ctx.save();
+
+		ctx.beginPath();
+		ctx.arc(169, 273, 68, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.clip();
+
+		ctx.drawImage(avatar, 90, 190, 155, 170);
+		ctx.restore();
+
+		return canvas.encode('png');
 	}
 	async buyItem({
 		userId,
