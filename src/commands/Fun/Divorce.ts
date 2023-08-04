@@ -49,21 +49,25 @@ export class DivorceCommand extends Command {
         })
 
         collector.on("collect", async (divorceInteraction) => {
-
-            const [_, answer] = divorceInteraction.customId.split("-")
-            acceptButton.setDisabled(true)
-            denyButton.setDisabled(true)
-            await response.edit({ components: [actionRow] })
-            if (answer === "accept") {
-                await this.container.utils.updateUserById(interaction.user.id, {
-                    partner: user.partner
-                })
-                await this.container.utils.updateUserById(user.partner, {
-                    partner: interaction.user.id
-                })
-                await divorceInteraction.reply(`<@${user.partner}>, ${interaction.user} has divorced you.`)
-            } else {
-                await divorceInteraction.reply({ ephemeral: true, content: `The request for divorce has been cancelled` })
+            if (user.partner) {
+                const [_, answer] = divorceInteraction.customId.split("-")
+                acceptButton.setDisabled(true)
+                denyButton.setDisabled(true)
+                await response.edit({ components: [actionRow] })
+                if (answer === "accept") {
+                    await this.container.utils.updateUserById(interaction.user.id, {
+                        partner: null
+                    })
+                    await this.container.utils.updateUserById(user.partner, {
+                        partner: null
+                    })
+                    await this.container.utils.updateUserById(user.partner, {
+                        partner: interaction.user.id
+                    })
+                    await divorceInteraction.reply(`<@${user.partner}>, ${interaction.user} has divorced you.`)
+                } else {
+                    await divorceInteraction.reply({ ephemeral: true, content: `The request for divorce has been cancelled` })
+                }
             }
 
         })

@@ -28,6 +28,10 @@ export class MarryCommand extends Command {
             return await interaction.reply('An error occurred');
         }
 
+        if (interaction.user.id === user.user.id) {
+            return await interaction.reply(`You can't marry yourself!`)
+        }
+
 
         const actionRow = new DJS.ActionRowBuilder<DJS.ButtonBuilder>()
 
@@ -41,7 +45,8 @@ export class MarryCommand extends Command {
             content: `${user.user}, do you accept ${interaction.user} as your partner in marriage?`,
             allowedMentions: {
                 parse: ["users"]
-            }
+            },
+            fetchReply: true
         })
 
         const collector = await response.createMessageComponentCollector({
@@ -76,7 +81,7 @@ export class MarryCommand extends Command {
         })
         return collector.on("end", async (_, reason) => {
             if (reason === "time") {
-                await response.edit({ components: [] })
+                await response.edit({ components: [], content: "This marriage request has expired" })
             }
         })
     }

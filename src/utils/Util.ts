@@ -178,6 +178,7 @@ export class Util {
 			timeInVoice: number;
 			isRashist: boolean;
 			birthday: string | null;
+			partner?: string
 			update: (data: any) => any;
 		};
 	}
