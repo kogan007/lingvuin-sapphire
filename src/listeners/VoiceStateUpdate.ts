@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { type VoiceState, type GuildMember, ChannelType } from 'discord.js';
+import { type VoiceState, type GuildMember, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder } from 'discord.js';
 
 const users = new Map();
 
@@ -25,7 +25,7 @@ export class UserEvent extends Listener {
 			const channel = await guild.channels.create({
 				type: ChannelType.GuildVoice,
 				name: `${member.displayName} Voice`,
-				position: position + 1,
+				position: position - 1,
 				parent: "1042602407844130928",
 				permissionOverwrites: [
 					{
@@ -35,6 +35,14 @@ export class UserEvent extends Listener {
 				]
 			})
 			await member.voice.setChannel(channel.id)
+			const channelEmbed = new EmbedBuilder().setDescription(`Welcome to your voice channel`)
+			const actionRow = new ActionRowBuilder<ButtonBuilder>()
+			const increaseLimit = new ButtonBuilder().setCustomId("voice-limit").setLabel("Change Limit")
+			actionRow.addComponents(increaseLimit)
+			await channel.send({
+				embeds: [channelEmbed],
+				components: [actionRow]
+			})
 		}
 
 	}
