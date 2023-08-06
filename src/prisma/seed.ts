@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import colors from '../items/colors';
 import icons from '../items/icons';
+import backgrounds from '../items/backgrounds';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -23,9 +24,19 @@ async function main() {
 			locked: false,
 			role: color.role,
 			type: 'color'
+		})),
+		...backgrounds.map((background) => ({
+			name: background.name,
+			price: 2000,
+			description: background.name,
+			image: background.image,
+			hidden: false,
+			locked: false,
+			type: 'background'
 		}))
 	];
 
+	await prisma.item.deleteMany({})
 	const result = await prisma.item.createMany({
 		data: items
 	});

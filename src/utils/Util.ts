@@ -58,7 +58,7 @@ export class Util {
 	// 	);
 	// }
 	async makeBannerImage(data: DJS.Guild) {
-		const memberCount = data.memberCount;
+		// const memberCount = data.memberCount;
 		const channels = await data.channels.fetch();
 		const voiceCount = channels
 			.filter((ch) => ch && ch.type === DJS.ChannelType.GuildVoice)
@@ -70,13 +70,34 @@ export class Util {
 			}, 0);
 
 
+		// function getLines(ctx: any, text: string, maxWidth: number) {
+		// 	var words = text.split(" ");
+		// 	var lines = [];
+		// 	var currentLine = words[0];
+
+		// 	for (var i = 1; i < words.length; i++) {
+		// 		var word = words[i];
+		// 		var width = ctx.measureText(currentLine + " " + word).width;
+		// 		if (width < maxWidth) {
+		// 			currentLine += " " + word;
+		// 		} else {
+		// 			lines.push(currentLine);
+		// 			currentLine = word;
+		// 		}
+		// 	}
+		// 	lines.push(currentLine);
+		// 	return lines;
+		// }
+
 		const mostActiveId = container.mostActive
 		const user = await data.members.fetch(mostActiveId)
+		let name = user.displayName?.slice(0, 10) ?? "";
+		if (name.length > 9) name = name + "..."
 
 		const avatar = await Canvas.loadImage(user.displayAvatarURL());
 
 
-		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-test.png'));
+		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-new.png'));
 
 		const canvas = createCanvas(background.width, background.height);
 		const ctx = canvas.getContext('2d');
@@ -85,27 +106,37 @@ export class Util {
 
 		ctx.save();
 
-		ctx.fillStyle = '#fff';
-		ctx.font = 'bold 30px Arial';
-		let name = user.displayName?.slice(0, 10) ?? "";
-		if (name.length > 9) name = name + "..."
-		ctx.fillText(name, 265, 280);
+		ctx.fillStyle = "#fff";
+		ctx.font = "bold 80px Arial";
+		ctx.fillText(name, 606, 750);
 		ctx.save();
 
-		ctx.font = 'bold 40px Arial';
-		ctx.fillText(String(voiceCount), 600, 290);
+		// console.log(user.presence?.activities)
+		// if (user.presence?.status) {
+		// 	ctx.fillStyle = "#777777";
+		// 	ctx.font = "bold 42px Arial";
+		// 	getLines(ctx, user.presence.status, 400).map((line, i) =>
+		// 		ctx.fillText(line, 606, 800 + i * 40)
+		// 	);
+		// 	ctx.save();
+		// }
+
+
+		ctx.fillStyle = "#fff";
+		ctx.font = "bold 200px Arial";
+		ctx.fillText(String(voiceCount), 1450, 770);
 		ctx.save();
 
-		ctx.font = 'bold 25px Arial';
-		ctx.fillText(String(memberCount), 550, 370);
-		ctx.save();
+		// ctx.font = "bold 25px Arial";
+		// ctx.fillText("7000", 550, 370);
+		// ctx.save();
 
 		ctx.beginPath();
-		ctx.arc(169, 273, 68, 0, Math.PI * 2, true);
+		ctx.arc(392, 760, 150, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.drawImage(avatar, 90, 190, 155, 170);
+		ctx.drawImage(avatar, 200, 600, 350, 320);
 		ctx.restore();
 
 		return canvas.encode('png');
@@ -164,7 +195,7 @@ export class Util {
 				where: { userId }
 			})) ?? (await this.addUser(userId));
 		user.update = (data: any) => {
-			return this.updateUserById(user.id, data);
+			return this.updateUserById(userId, data);
 		};
 		return user as {
 			id: string;
@@ -179,6 +210,7 @@ export class Util {
 			isRashist: boolean;
 			birthday: string | null;
 			partner?: string
+			activeBg: string
 			update: (data: any) => any;
 		};
 	}

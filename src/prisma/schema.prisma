@@ -23,6 +23,7 @@ model User {
   isRashist Boolean @default(false)
   birthday String?
   partner  String?
+  activeBg String @default("")
 }
 
 model Item {

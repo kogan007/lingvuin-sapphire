@@ -40,8 +40,8 @@ export class ShopCommand extends Command {
 			.setEmoji(`1130147955349930106`);
 
 		const coinsButton = new DJS.ButtonBuilder()
-			.setCustomId('buyCoins')
-			.setLabel(translation.shop.coins)
+			.setCustomId('shopBg')
+			.setLabel(translation.shop.bg)
 			.setStyle(DJS.ButtonStyle.Secondary)
 			.setEmoji('1129861811638894743');
 

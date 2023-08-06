@@ -2,6 +2,8 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Listener, type Store } from '@sapphire/framework';
 import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colorette';
 import agenda from '../utils/agenda';
+// import { EmbedBuilder } from 'discord.js';
+// import { ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from '@discordjs/builders';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -20,6 +22,19 @@ export class UserEvent extends Listener {
 		const guild = await this.container.client.guilds.fetch('1042523320752537680');
 		this.container.utils.makeBannerImage(guild).then((banner) => guild.setBanner(banner));
 
+		// const infoChannel = await guild.channels.cache.find(c => c.id === "1071770941673197679")
+		// if (infoChannel?.isTextBased()) {
+		// 	const embed = new EmbedBuilder().setImage("https://i.ibb.co/dGwyZhz/Banner-Not-Full-4.png")
+		// 	const actionRow = new ActionRowBuilder<StringSelectMenuBuilder>()
+
+		// 	const selectMenu = new StringSelectMenuBuilder().setCustomId("info").addOptions([
+		// 		new StringSelectMenuOptionBuilder().setLabel("Information").setValue("info"),
+		// 		new StringSelectMenuOptionBuilder().setLabel("Rules").setValue("rules")
+		// 	])
+
+		// 	actionRow.addComponents(selectMenu)
+		// 	await infoChannel.send({ embeds: [embed], components: [actionRow] })
+		// }
 		setInterval(() => {
 			const mostMessages = this.container.recentlyTalked.reduce((prev, current) => (prev > current ? prev : current), 0);
 			let mostActive = '';
@@ -75,3 +90,4 @@ ${line03}${dev ? ` ${pad}${blc('<')}${llc('/')}${blc('>')} ${llc('DEVELOPMENT MO
 		return gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString().padEnd(3, ' '))} ${store.name}.`);
 	}
 }
+
