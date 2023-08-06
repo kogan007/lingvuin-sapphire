@@ -41,7 +41,6 @@ export class UserEvent extends Listener {
 			actionRow.addComponents(increaseLimit)
 			await channel.send({
 				embeds: [channelEmbed],
-				components: [actionRow]
 			})
 		}
 
