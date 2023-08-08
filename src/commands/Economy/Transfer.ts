@@ -1,7 +1,7 @@
 import { Command } from '@sapphire/framework';
 import * as DJS from 'discord.js';
 
-export class AddMoneyCommand extends Command {
+export class TransferCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, {
 			...options,
@@ -15,7 +15,7 @@ export class AddMoneyCommand extends Command {
 				.setDescription(this.description)
 				.addUserOption((opt) => opt.setName('target').setDescription('The user to transfer money to').setRequired(true))
 				.addIntegerOption((opt) => opt.setName('amount').setDescription('The amount to transfer').setRequired(true))
-				.setDefaultMemberPermissions(DJS.PermissionFlagsBits.ManageGuild)
+				.setDefaultMemberPermissions(DJS.PermissionFlagsBits.SendMessages)
 		);
 	}
 

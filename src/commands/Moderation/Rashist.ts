@@ -18,9 +18,8 @@ export class RashistCommand extends Command {
 				.addUserOption((opt) => opt.setName('target').setDescription('The user to set as rashist').setRequired(true))
 				.setDefaultMemberPermissions(
 					DJS.PermissionFlagsBits.ManageGuild |
-						DJS.PermissionFlagsBits.ManageGuild |
-						DJS.PermissionFlagsBits.BanMembers |
-						DJS.PermissionFlagsBits.KickMembers
+					DJS.PermissionFlagsBits.BanMembers |
+					DJS.PermissionFlagsBits.KickMembers
 				)
 		);
 	}

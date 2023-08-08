@@ -1,10 +1,10 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { type VoiceState, type GuildMember, ChannelType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { type VoiceState, type GuildMember, } from 'discord.js';
 
 const users = new Map();
 
-const hub = "1137371497258823690"
+// const hub = "1137371497258823690"
 
 @ApplyOptions<Listener.Options>({})
 export class UserEvent extends Listener {
@@ -19,31 +19,31 @@ export class UserEvent extends Listener {
 		const member = oldState.member || newState.member;
 		if (!member) return;
 		await calculateReward(newState, oldState, member, this.container.utils)
-		if (newState.channel && newState.channelId === hub) {
-			const position = newState.channel.position
-			const guild = newState.guild
-			const channel = await guild.channels.create({
-				type: ChannelType.GuildVoice,
-				name: `${member.displayName} Voice`,
-				position: position + 1,
-				parent: "1042602407844130928",
-				permissionOverwrites: [
-					{
-						id: member.id,
-						allow: ["Connect", "ViewChannel", "DeafenMembers"]
-					}
-				]
-			})
-			await member.voice.setChannel(channel.id)
-			const channelEmbed = new EmbedBuilder().setDescription(`Welcome to your voice channel`)
-			const actionRow = new ActionRowBuilder<ButtonBuilder>()
-			const increaseLimit = new ButtonBuilder().setCustomId("voice-limit").setLabel("Change Limit").setStyle(ButtonStyle.Primary)
-			actionRow.addComponents(increaseLimit)
-			await channel.send({
-				embeds: [channelEmbed],
-				components: [actionRow]
-			})
-		}
+		// if (newState.channel && newState.channelId === hub) {
+		// 	const position = newState.channel.position
+		// 	const guild = newState.guild
+		// 	const channel = await guild.channels.create({
+		// 		type: ChannelType.GuildVoice,
+		// 		name: `${member.displayName} Voice`,
+		// 		position: position + 1,
+		// 		parent: "1042602407844130928",
+		// 		permissionOverwrites: [
+		// 			{
+		// 				id: member.id,
+		// 				allow: ["Connect", "ViewChannel", "DeafenMembers"]
+		// 			}
+		// 		]
+		// 	})
+		// 	await member.voice.setChannel(channel.id)
+		// 	const channelEmbed = new EmbedBuilder().setDescription(`Welcome to your voice channel`)
+		// 	const actionRow = new ActionRowBuilder<ButtonBuilder>()
+		// 	const increaseLimit = new ButtonBuilder().setCustomId("voice-limit").setLabel("Change Limit").setStyle(ButtonStyle.Primary)
+		// 	actionRow.addComponents(increaseLimit)
+		// 	await channel.send({
+		// 		embeds: [channelEmbed],
+		// 		components: [actionRow]
+		// 	})
+		// }
 
 	}
 }

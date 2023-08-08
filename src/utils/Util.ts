@@ -58,7 +58,7 @@ export class Util {
 	// 	);
 	// }
 	async makeBannerImage(data: DJS.Guild) {
-		// const memberCount = data.memberCount;
+		const memberCount = data.memberCount;
 		const channels = await data.channels.fetch();
 		const voiceCount = channels
 			.filter((ch) => ch && ch.type === DJS.ChannelType.GuildVoice)
@@ -97,7 +97,7 @@ export class Util {
 		const avatar = await Canvas.loadImage(user.displayAvatarURL());
 
 
-		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-new.png'));
+		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-saturated.png'));
 
 		const canvas = createCanvas(background.width, background.height);
 		const ctx = canvas.getContext('2d');
@@ -124,20 +124,25 @@ export class Util {
 
 		ctx.fillStyle = "#fff";
 		ctx.font = "bold 200px Arial";
-		ctx.fillText(String(voiceCount), 1450, 770);
+		ctx.fillText(String(voiceCount), 1460, 770);
 		ctx.save();
+
+		ctx.font = "bold 50px Arial";
+		ctx.fillText(String(memberCount), 1520, 525);
+		ctx.save()
 
 		// ctx.font = "bold 25px Arial";
 		// ctx.fillText("7000", 550, 370);
 		// ctx.save();
 
 		ctx.beginPath();
-		ctx.arc(392, 760, 150, 0, Math.PI * 2, true);
+		ctx.arc(392, 760, 146, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
 
 		ctx.drawImage(avatar, 200, 600, 350, 320);
 		ctx.restore();
+
 
 		return canvas.encode('png');
 	}

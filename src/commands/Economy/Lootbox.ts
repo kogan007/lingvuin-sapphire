@@ -17,6 +17,11 @@ export class DailyCommand extends Command {
 				.setDescription(this.description)
 				.addIntegerOption((opt) => opt.setName('min').setRequired(true).setDescription('The min value of the lootbox'))
 				.addIntegerOption((opt) => opt.setName('max').setRequired(true).setDescription('The max value of the lootbox'))
+				.setDefaultMemberPermissions(
+					DJS.PermissionFlagsBits.ManageGuild |
+					DJS.PermissionFlagsBits.BanMembers |
+					DJS.PermissionFlagsBits.KickMembers
+				)
 		);
 	}
 
