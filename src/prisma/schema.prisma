@@ -13,6 +13,7 @@ datasource db {
 model User {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   userId String
+  status String?
   dailyCooldown Int?
   money Int @default(0)
   inventory String[]
@@ -37,6 +38,16 @@ model Item {
   role String?
   image String?
   type String?
+}
 
+model Clan {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    owner     String
+    money     Int @default(0)
+    members   String[]
+    taxRate   Int?
+    icon      String?
+    slogan    String?
+    
 }
 
