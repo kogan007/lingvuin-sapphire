@@ -20,6 +20,9 @@ export class SetStatusCommand extends Command {
     public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
         await interaction.deferReply({ ephemeral: true });
         const status = interaction.options.getString("status", true)
+        if (status.length > 119) {
+            return await interaction.editReply("Your status is too long")
+        }
         await this.container.utils.updateUserById(interaction.user.id, {
             status
         })
