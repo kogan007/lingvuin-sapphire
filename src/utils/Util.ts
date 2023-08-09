@@ -91,6 +91,7 @@ export class Util {
 
 		const mostActiveId = container.mostActive
 		const user = await data.members.fetch(mostActiveId)
+		const apiUser = await this.getUserById(user.id)
 		let name = user.displayName?.slice(0, 10) ?? "";
 		if (name.length > 9) name = name + "..."
 
@@ -110,6 +111,13 @@ export class Util {
 		ctx.font = "bold 80px Arial";
 		ctx.fillText(name, 606, 750);
 		ctx.save();
+
+		if (apiUser.status) {
+			ctx.font = "bold 50px Arial";
+
+			ctx.fillText(apiUser.status.substring(0, 20), 606, 820)
+		}
+
 
 		// console.log(user.presence?.activities)
 		// if (user.presence?.status) {
@@ -216,6 +224,7 @@ export class Util {
 			birthday: string | null;
 			partner?: string
 			activeBg: string
+			status?: string
 			update: (data: any) => any;
 		};
 	}
