@@ -31,6 +31,10 @@ const colors = [
     name: "Gray",
     role: "1130205711163457537",
   },
+  {
+    name: "Red",
+    role: "1138900925721874432"
+  }
 ];
 
 export default colors;
