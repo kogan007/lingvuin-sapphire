@@ -97,7 +97,7 @@ export class Util {
 		const avatar = await Canvas.loadImage(user.displayAvatarURL());
 
 
-		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-saturated.png'));
+		const background = await Canvas.loadImage(path.resolve(__dirname, 'banner-ai5.png'));
 
 		const canvas = createCanvas(background.width, background.height);
 		const ctx = canvas.getContext('2d');
@@ -128,7 +128,7 @@ export class Util {
 		ctx.save();
 
 		ctx.font = "bold 50px Arial";
-		ctx.fillText(String(memberCount), 1520, 525);
+		ctx.fillText(String(memberCount), 995, 935);
 		ctx.save()
 
 		// ctx.font = "bold 25px Arial";
